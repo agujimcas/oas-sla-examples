@@ -8,110 +8,47 @@ info:
 security:
   - BearerAuth: []
 paths:
-  /api/v1/teams:
-    x-router-controller: teamsController
+  /api/v1/hireds:
+    x-router-controller: hiredsController
     get:
-      description: Returns all teams
-      operationId: getTeams
+      description: Returns all hireds
+      operationId: getHireds
       responses:
         200:
-          description: Team list
+          description: Hired list
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/team'
+                  $ref: '#/components/schemas/hired'
         default:
           description: Unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-    post:
-      description: Creates a new team
-      operationId: addTeam
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/team'
-        description: Team to be created
-        required: true
-      responses:
-        201:
-          description: Team
-        default:
-            description: Unexpected error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/error'
+   
                   
-  /api/v1/teams/{id}:
-    x-router-controller: teamsController
+  /api/v1/hireds/{year}:
+    x-router-controller: hiredsController
     get:
-      description: Returns a single team by its id
-      operationId: findByid
+      description: Returns a single hired by its id
+      operationId: findByyear
       parameters:
         - required: true
           name: id
-          description: id of the team to fetch
+          description: id of the hired to fetch
           in: path
           schema:
             type: number
       responses:
         200:
-          description: Team found by id
+          description: Hired found by id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/team'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-    put:
-      description: Update a team based on its id
-      operationId: updateTeam
-      parameters:
-        - required: true
-          name: id
-          description: id of the team to update
-          in: path
-          schema:
-            type: number
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/team'
-        description: Team to be updated
-        required: true
-      responses:
-        '204':
-          description: Team updated
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error'
-    delete:
-      description: Deletes a single team based on its id
-      operationId: deleteTeam
-      parameters:
-        - required: true
-          name: id
-          description: id of the team to delete
-          in: path
-          schema:
-            type: number
-      responses:
-        '204':
-          description: Team deleted
+                $ref: '#/components/schemas/hired'
         default:
           description: Unexpected error
           content:
@@ -126,12 +63,12 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    team:
+    hired:
         type: object
         required:
-          - id
+          - year
         properties:
-          id:
+          year:
             type: number
           name:
             type: string
